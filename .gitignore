@@ -1,0 +1,11 @@
+# Ignore Mac system files
+.DS_store
+
+# ignore credential text files
+twilio_account_permission*
+
+# ignore notes files
+README*
+
+# ignore virtualenv
+sms_bot_venv*

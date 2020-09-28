@@ -67,9 +67,13 @@ def sms():
 """
 
 # for debugging purposes
+@app.route("/")
+def main():
+	return "This is the main page of the Twilio app!"
+
 @app.route("/sms")
 def hello():
-	return "This is the Twilio app working!"
+	return "This is the SMS page of our Twilio app!"
 
 
 if __name__ == "__main__":

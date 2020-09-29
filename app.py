@@ -113,13 +113,13 @@ def send_text():
 		message = request.form.get("message")
 
 		# add check to see if there's anything in the fields or if they're valid entries
-		if phone_number == "" or message = "":
+		if phone_number == "" or message == "":
 			return render_template("send_text.html", message = "Please enter required fields")
 
 		# add check to see if we have a valid 10-digit number
 		if len(phone_number) != 10:
 			return render_template("send_text.html", message = "Please enter a valid, 10-digit phone number")
-			
+
 		# TODO: store phone number in DB
 
 		# send the message to that number

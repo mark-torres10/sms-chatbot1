@@ -108,7 +108,7 @@ def send_text():
 		# get the phone number
 		phone_number = request.form.get("phone_number")
 
-		phone_number = phone_number.translate(None, string.punctuation)
+		phone_number = phone_number.translate(str.maketrans('', '', string.punctuation))
 
 		# get message
 		message = request.form.get("message")

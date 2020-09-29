@@ -94,7 +94,7 @@ def render_static(page_name):
 	return render_template(f"{page_name}.html")
 """
 
-@app.route("/send_text")
+@app.route("/send_text", methods =["GET", "POST"])
 def send_text():
 	"""
 		Gets inputs from webpage to send text, then sends texts

@@ -99,12 +99,22 @@ def send_text():
 	"""
 		Gets inputs from webpage to send text, then sends texts
 	"""
+
+	# if we're getting a POST request from the web page
 	if request.method=="POST":
+
 		# get the phone number
 		phone_number = request.form.get("phone_number")
+
 		# get message
 		message = request.form.get("message")
+
+		# send the message to that number
+		client.messages.create(to = phone_number, from_ = from_number, body = message)
+
 		return f"You're sending the following messaging to {phone_number}: {message}"
+
+	# else, if the web page isn't doing anything special
 	return render_template("send_text.html")
 
 

@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 import twilio
 from twilio.rest import Client
 import random
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, request
 from twilio.twiml.messaging_response import MessagingResponse
 from flask_sqlalchemy import SQLAlchemy
 import sys
@@ -86,19 +86,26 @@ def sms():
 
 	return str(resp)
 
+"""
 # add website to send number (make generic, for now, to take any page name)
 @app.route("/<string:page_name>")
 def render_static(page_name):
-	"""
-		Render static webpage
-	"""
+
 	return render_template(f"{page_name}.html")
+"""
 
-## TODO: Add way to get phone_number
-
-## TODO: 
+@app.route("/send_text")
 def send_text():
-	return "We will send a number from this page!"
+	"""
+		Gets inputs from webpage to send text, then sends texts
+	"""
+	if request.method=="POST":
+		# get the phone number
+		phone_number = request.form.get("phone_number")
+		# get message
+		message = request.form.get("message")
+		return f"You're sending the following messaging to {phone_number}: {message}"
+	return render_template("send_text.html")
 
 
 if __name__ == "__main__":

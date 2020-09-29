@@ -11,7 +11,7 @@
 		<h2>From this page, you can send text messages to any phone number </h2>
 		<!-- add error message if user puts invalid input -->
 		{% if message %}
-		<p class="message">{{ message | safe }}</p>
+		<p class="message" style="color:red">{{ message | safe }}</p>
 		{% endif %}
 		<!-- add user form below-->
 		<p>Type below the person's phone number and the text that you'd like to send them</p>

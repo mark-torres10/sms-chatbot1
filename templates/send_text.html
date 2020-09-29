@@ -6,8 +6,10 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
-		<title>Sending texts!</title>
-		<h1>This is the page that we'll use to send texts from!</h1>
+		<title>Automated SMS Platform</title>
+		<h1>Automated SMS Platform</h1>
+		<h2>From this page, you can send text messages to any phone number </h2>
+		<p>Type below the person's phone number and the text that you'd like to send them</p>
 		<form action="{{url_for('send_text')}}" method = "post">
 			<label for="phone_number">Phone Number:</label>
 			<input type="tel" id="phone_number" name="phone_number" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="1234567890">

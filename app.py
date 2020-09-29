@@ -23,6 +23,9 @@ from flask_sqlalchemy import SQLAlchemy
 import sys
 import argparse
 import string
+import json
+import customer
+from customer import Customer
 
 # set testing = True, as default
 testing = True
@@ -32,6 +35,10 @@ load_dotenv(".env")
 account_sid = os.environ["ACCOUNT_SID"]
 auth_token = os.environ["AUTH_TOKEN"]
 master_password = os.environ["PASSWORD"] # get admin password to send texts
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"] # set up connection with database
+
+# create DB
+db = SQLAlchemy(app)
 
 # log into account
 client = Client(account_sid, auth_token)
@@ -40,6 +47,11 @@ client = Client(account_sid, auth_token)
 from_number="+12392417096"
 #to_number="+12393003122"
 to_number=""
+
+# get all current numbers in our database
+customers=Customer.query.all()
+customers_json = jsonify([c.serialize() for c in customers])
+customers_dict = json.loads(customers_json) # returns dict where keys = id, values = phone numbers
 
 # create our app
 app = Flask(__name__)
@@ -128,10 +140,17 @@ def send_text():
 		if len(phone_number) != 10:
 			return render_template("send_text.html", message = "Please enter a valid, 10-digit phone number")
 
-		# TODO: store phone number in DB
-
 		# send the message to that number
 		client.messages.create(to = phone_number, from_ = from_number, body = message)
+
+		# TODO: store phone number in DB
+		if phone_number not in customers_dict.values():
+			print(f"Adding new phone number to DB: {phone_number}")
+			customer = Customer(phone = phone_number)
+			db.session.add(customer)
+			db.session.commit()
+			return "Customer's phone number successfully added to database"
+			# TODO: add this message ("customer's phone number....") as a part of success.html
 
 		return render_template("success.html")
 

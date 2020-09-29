@@ -109,10 +109,12 @@ def send_text():
 		# get message
 		message = request.form.get("message")
 
+		# store phone number in DB
+
 		# send the message to that number
 		client.messages.create(to = phone_number, from_ = from_number, body = message)
 
-		return f"You're sending the following messaging to {phone_number}: {message}"
+		return render_template("success.html")
 
 	# else, if the web page isn't doing anything special
 	return render_template("send_text.html")

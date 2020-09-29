@@ -22,6 +22,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from flask_sqlalchemy import SQLAlchemy
 import sys
 import argparse
+import string
 
 # set testing = True, as default
 testing = True
@@ -106,10 +107,20 @@ def send_text():
 		# get the phone number
 		phone_number = request.form.get("phone_number")
 
+		phone_number = phone_number.translate(None, string.punctuation)
+
 		# get message
 		message = request.form.get("message")
 
-		# store phone number in DB
+		# add check to see if there's anything in the fields or if they're valid entries
+		if phone_number == "" or message = "":
+			return render_template("send_text.html", message = "Please enter required fields")
+
+		# add check to see if we have a valid 10-digit number
+		if len(phone_number) != 10:
+			return render_template("send_text.html", message = "Please enter a valid, 10-digit phone number")
+			
+		# TODO: store phone number in DB
 
 		# send the message to that number
 		client.messages.create(to = phone_number, from_ = from_number, body = message)

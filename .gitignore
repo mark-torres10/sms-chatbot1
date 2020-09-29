@@ -12,3 +12,4 @@ sms_bot_venv*
 
 # ignore recovery code
 twilio_recovery_code.txt
+creds.env

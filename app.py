@@ -31,6 +31,7 @@ testing = True
 load_dotenv(".env")
 account_sid = os.environ["ACCOUNT_SID"]
 auth_token = os.environ["AUTH_TOKEN"]
+master_password = os.environ["PASSWORD"] # get admin password to send texts
 
 # log into account
 client = Client(account_sid, auth_token)
@@ -111,6 +112,13 @@ def send_text():
 
 		# get message
 		message = request.form.get("message")
+
+		# get password
+		password = request.form.get("password")
+
+		# if they entered the password, don't proceed
+		if password != master_password:
+			return render_template("send_text.html", message = "Your password was incorrect. Please try again")
 
 		# add check to see if there's anything in the fields or if they're valid entries
 		if phone_number == "" or message == "":

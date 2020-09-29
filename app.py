@@ -24,7 +24,6 @@ import sys
 import argparse
 import string
 import json
-import customer
 from customer import Customer
 
 # set testing = True, as default

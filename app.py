@@ -72,9 +72,19 @@ def main():
 
 	return "This is the main page of the Twilio app!"
 
-@app.route("/sms")
-def hello():
-	return "This is the SMS page of our Twilio app!"
+@app.route("/sms", methods = ["GET", "POST"])
+def sms():
+	"""
+		Respond to incoming messages with our own message
+	"""
+
+	# initialize response
+	resp = MessagingResponse()
+
+	# add a message
+	resp.message("Thank you for your response! We are confirming your message.")
+
+	return str(resp)
 
 # add website to send number (make generic, for now, to take any page name)
 @app.route("/<string:page_name>")

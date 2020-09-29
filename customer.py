@@ -4,8 +4,22 @@
 	Initializes and stores information about each customer (namely, their phone number, as well as an automated ID counter primary key)
 """
 
-from app import db
+# initialize model, app settings
+model_settings = {
+    'db': None,
+}
 
+
+def init_models_module(db):
+    model_settings['db'] = db
+
+
+def app_db():
+    return model_settings['db']
+
+db = app_db()
+
+# initialize Customer object
 class Customer(db.Model):
 
 	# initialize table name
